@@ -1,6 +1,9 @@
 import React from 'react';
 import { FetchData } from '../../Utils/ApiUtils'
 import ProductsCard from './SubComp/ProductsCard';
+import "./products.scss";
+
+import SearchFilter from './SubComp/SearchFilter';
 // import axios from 'axios'
 
 class Products extends React.Component {
@@ -9,7 +12,8 @@ class Products extends React.Component {
         super(props)
 
         this.state = {
-            products: []
+            products: [],
+            filteredProducts: []
         }
     }
 
@@ -18,7 +22,7 @@ class Products extends React.Component {
         const resp = await FetchData('https://fakestoreapi.com/products', 'GET');
 
         if (resp.status === 200) {
-            this.setState({ products: resp.data })
+            this.setState({ products: resp.data, filteredProducts: resp.data })
         } else {
             console.warn("sorry this api failed");
             //@TODO: we will handle it later 
@@ -26,17 +30,32 @@ class Products extends React.Component {
 
     }
 
+    onSearchFilterChangeed(searchText) {
+        console.log(searchText)
+        const _filteredProducts = this.state.products.filter((item) => {
+            return item.title.includes(searchText) || item.description.includes(searchText)
+        })
+
+
+        this.setState({ filteredProducts: _filteredProducts })
+    }
+
 
     render() {
         return (
             <div>
-                <div className="row">
-                    {this.state.products.map((item, idx) => {
+                <SearchFilter onChange={this.onSearchFilterChangeed.bind(this)} />
+                <div className="row ms-5 me-5">
+                    {this.state.filteredProducts.map((item, idx) => {
 
                         return (
-                            <div className="col-lg-3" key={idx}>
-                                <ProductsCard product={item} />
-                            </div>
+                            <>
+
+                                <div className="col-lg-2 col-md-3" key={idx}>
+                                    <ProductsCard product={item} />
+                                </div>
+                            </>
+
                         )
                     })}
                 </div>

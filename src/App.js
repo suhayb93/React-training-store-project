@@ -1,6 +1,6 @@
 import "bootstrap";
-import "bootstrap/scss/bootstrap.scss"
-import "./App.css"
+import "bootstrap/scss/bootstrap.scss";
+import "./Styles/mixins.scss"
 import Products from "./Pages/Products/Products"
 
 import NavBar from "./Components/NavBar/NavBar";
