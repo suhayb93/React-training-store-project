@@ -30,11 +30,21 @@ class Products extends React.Component {
 
     }
 
-    onSearchFilterChangeed(searchText) {
-        console.log(searchText)
+    onSearchFilterChangeed(searchText, filterBy) {
         const _filteredProducts = this.state.products.filter((item) => {
-            return item.title.includes(searchText) || item.description.includes(searchText)
+            const upperCaseTitle = item.title.toUpperCase();
+            const upperCaseDesc = item.description.toUpperCase();
+            const upperCaseSearchTxt = searchText.toUpperCase();
+
+            if (filterBy === "title") {
+                return upperCaseTitle.includes(upperCaseSearchTxt)
+            } else if (filterBy === "desc") {
+                return upperCaseDesc.includes(upperCaseSearchTxt)
+            }
+            return upperCaseTitle.includes(upperCaseSearchTxt) || upperCaseDesc.includes(upperCaseSearchTxt)
         })
+
+
 
 
         this.setState({ filteredProducts: _filteredProducts })
@@ -49,12 +59,9 @@ class Products extends React.Component {
                     {this.state.filteredProducts.map((item, idx) => {
 
                         return (
-                            <>
-
-                                <div className="col-lg-2 col-md-3" key={idx}>
-                                    <ProductsCard product={item} />
-                                </div>
-                            </>
+                            <div className="col-lg-2 col-md-3" key={idx}>
+                                <ProductsCard product={item} />
+                            </div>
 
                         )
                     })}
