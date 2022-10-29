@@ -1,8 +1,18 @@
 import React from 'react';
 
-function ProductsCard({ product }) {
+function ProductsCard({ product, onClick }) {
+
+    function onCardClicked() {
+        if (typeof onClick === "function") {
+            onClick();
+        }
+    }
+
     return (
-        <div className='product-card'>
+        <div
+            className='product-card'
+            onClick={onCardClicked}
+        >
             <div className='product-img-wrapper'>
                 <img
                     className='product-img'

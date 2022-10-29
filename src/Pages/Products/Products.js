@@ -1,9 +1,13 @@
 import React from 'react';
-import { FetchData } from '../../Utils/ApiUtils'
-import ProductsCard from './SubComp/ProductsCard';
+
 import "./products.scss";
+// import { Modal } from 'bootstrap';
 
 import SearchFilter from './SubComp/SearchFilter';
+import { FetchData } from '../../Utils/ApiUtils'
+import ProductsCard from './SubComp/ProductsCard';
+import { GlobalContext } from '../../Utils/Contexts';
+import ProductDetailsModal from './SubComp/ProductDetailsModal';
 // import axios from 'axios'
 
 class Products extends React.Component {
@@ -50,6 +54,13 @@ class Products extends React.Component {
         this.setState({ filteredProducts: _filteredProducts })
     }
 
+    onProductClicked(product) {
+        this.context.showModal({
+            title: product.title,
+            body: <ProductDetailsModal product={product} />,
+        })
+    }
+
 
     render() {
         return (
@@ -60,7 +71,10 @@ class Products extends React.Component {
 
                         return (
                             <div className="col-lg-2 col-md-3" key={idx}>
-                                <ProductsCard product={item} />
+                                <ProductsCard
+                                    product={item}
+                                    onClick={this.onProductClicked.bind(this, item)}
+                                />
                             </div>
 
                         )
@@ -70,5 +84,7 @@ class Products extends React.Component {
         )
     }
 }
+
+Products.contextType = GlobalContext;
 
 export default Products;
