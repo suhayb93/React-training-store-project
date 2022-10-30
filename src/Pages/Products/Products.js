@@ -4,7 +4,9 @@ import ProductsCard from './SubComp/ProductsCard';
 import "./products.scss";
 
 import SearchFilter from './SubComp/SearchFilter';
-// import axios from 'axios'
+import { GlobalContext } from '../../Utils/Contexts';
+import ProductDetailsModal from './SubComp/ProductDetailsModal';
+
 
 class Products extends React.Component {
 
@@ -13,7 +15,8 @@ class Products extends React.Component {
 
         this.state = {
             products: [],
-            filteredProducts: []
+            filteredProducts: [],
+            // productDetails: {}
         }
     }
 
@@ -50,6 +53,13 @@ class Products extends React.Component {
         this.setState({ filteredProducts: _filteredProducts })
     }
 
+    onCardClicked(product) {
+        this.context.showModal({
+            body: <ProductDetailsModal product={product} />,
+            title: <span>{product.title}</span>
+        });
+    }
+
 
     render() {
         return (
@@ -60,7 +70,9 @@ class Products extends React.Component {
 
                         return (
                             <div className="col-lg-2 col-md-3" key={idx}>
-                                <ProductsCard product={item} />
+                                <ProductsCard
+                                    onClick={this.onCardClicked.bind(this, item)}
+                                    product={item} />
                             </div>
 
                         )
@@ -71,4 +83,6 @@ class Products extends React.Component {
     }
 }
 
-export default Products;
+Products.contextType = GlobalContext;
+
+export default Products; 

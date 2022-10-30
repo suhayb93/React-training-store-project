@@ -44,3 +44,14 @@ $border-color: lightGray;
         text-overflow: ellipsis;
     }
 }
+
+.product-details-modal {
+    .details-img-wrapper {
+        height: 350px
+    }
+
+    .details-img {
+        width: 100%;
+        height: 100%;
+    }
+}

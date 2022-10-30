@@ -25,10 +25,14 @@ class SearchFilter extends React.Component {
 
     }
 
-    onFilterSelected(e) {
-        this.setState({
+    async onFilterSelected(e) {
+        await this.setState({
             filterBy: e.target.value
         })
+
+        if ('onChange' in this.props) {
+            this.props.onChange(this.state.searchText, this.state.filterBy);
+        }
     }
 
     async onResetForm(e) {

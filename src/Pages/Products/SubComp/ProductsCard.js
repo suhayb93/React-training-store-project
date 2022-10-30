@@ -1,8 +1,18 @@
+import { type } from '@testing-library/user-event/dist/type';
 import React from 'react';
 
-function ProductsCard({ product }) {
+function ProductsCard({ product, onClick }) {
+
+    function onProductCardClicked() {
+        if (typeof onClick === "function") {
+            onClick();
+        }
+    }
     return (
-        <div className='product-card'>
+        <div
+            onClick={onProductCardClicked}
+            className='product-card'
+        >
             <div className='product-img-wrapper'>
                 <img
                     className='product-img'
