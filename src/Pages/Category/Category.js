@@ -26,7 +26,8 @@ function Category() {
         <div className="product-categories">
             {categories.map((category, idx) => {
                 return (
-                    <Link to="/product" key={idx}
+                    <Link to={`/product?category=${category.name}`} key={idx}
+
                         className={"card container my-5"}
                     >
                         <img

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { FetchData } from '../../Utils/ApiUtils'
 import ProductsCard from './SubComp/ProductsCard';
 import "./products.scss";
+import { useLocation, useSearchParams } from 'react-router-dom';
 
 import SearchFilter from './SubComp/SearchFilter';
 import { GlobalContext } from '../../Utils/Contexts';
@@ -13,13 +14,25 @@ function Products() {
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const context = useContext(GlobalContext);
+    const [queryString, setQueryString] = useSearchParams();
+
+    const _category = queryString.get('category');
+    const [category, setCategory] = useState(_category);
+
+    console.log(category);
 
     useEffect(() => {
         getProducts();
     }, [])
 
     async function getProducts() {
-        const resp = await FetchData('https://fakestoreapi.com/products', 'GET');
+        let resp = ''
+        if (!category) {
+            resp = await FetchData('https://fakestoreapi.com/products', 'GET');
+
+        } else {
+            resp = await FetchData(`https://fakestoreapi.com/products/category/${category}`, 'GET')
+        }
 
         if (resp.status === 200) {
             // this.setState({ products: resp.data, filteredProducts: resp.data })
