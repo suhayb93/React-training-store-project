@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FetchData } from '../../Utils/ApiUtils';
 import './category.scss'
 import { mappCategory } from './utils';
+import { Link } from 'react-router-dom';
 
 function Category() {
 
@@ -25,7 +26,7 @@ function Category() {
         <div className="product-categories">
             {categories.map((category, idx) => {
                 return (
-                    <div key={idx}
+                    <Link to="/product" key={idx}
                         className={"card container my-5"}
                     >
                         <img
@@ -38,7 +39,7 @@ function Category() {
                          align-items-center'>
                             <h1>{category.label}</h1>
                         </div>
-                    </div>
+                    </Link>
                 )
             })}
 

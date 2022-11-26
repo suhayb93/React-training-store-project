@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { FetchData } from '../../Utils/ApiUtils'
 import ProductsCard from './SubComp/ProductsCard';
 import "./products.scss";
@@ -8,24 +8,23 @@ import { GlobalContext } from '../../Utils/Contexts';
 import ProductDetailsModal from './SubComp/ProductDetailsModal';
 
 
-class Products extends React.Component {
+function Products() {
 
-    constructor(props) {
-        super(props)
+    const [products, setProducts] = useState([]);
+    const [filteredProducts, setFilteredProducts] = useState([]);
+    const context = useContext(GlobalContext);
 
-        this.state = {
-            products: [],
-            filteredProducts: [],
-            // productDetails: {}
-        }
-    }
+    useEffect(() => {
+        getProducts();
+    }, [])
 
-
-    async componentDidMount() {
+    async function getProducts() {
         const resp = await FetchData('https://fakestoreapi.com/products', 'GET');
 
         if (resp.status === 200) {
-            this.setState({ products: resp.data, filteredProducts: resp.data })
+            // this.setState({ products: resp.data, filteredProducts: resp.data })
+            setProducts(resp.data);
+            setFilteredProducts(resp.data)
         } else {
             console.warn("sorry this api failed");
             //@TODO: we will handle it later 
@@ -33,8 +32,8 @@ class Products extends React.Component {
 
     }
 
-    onSearchFilterChangeed(searchText, filterBy) {
-        const _filteredProducts = this.state.products.filter((item) => {
+    function onSearchFilterChangeed(searchText, filterBy) {
+        const _filteredProducts = products.filter((item) => {
             const upperCaseTitle = item.title.toUpperCase();
             const upperCaseDesc = item.description.toUpperCase();
             const upperCaseSearchTxt = searchText.toUpperCase();
@@ -47,42 +46,38 @@ class Products extends React.Component {
             return upperCaseTitle.includes(upperCaseSearchTxt) || upperCaseDesc.includes(upperCaseSearchTxt)
         })
 
-
-
-
-        this.setState({ filteredProducts: _filteredProducts })
+        // this.setState({ filteredProducts: _filteredProducts })
+        setFilteredProducts(_filteredProducts)
     }
 
-    onCardClicked(product) {
-        this.context.showModal({
+    function onCardClicked(product) {
+        context.showModal({
             body: <ProductDetailsModal product={product} />,
             title: <span>{product.title}</span>
         });
     }
 
 
-    render() {
-        return (
-            <div>
-                <SearchFilter onChange={this.onSearchFilterChangeed.bind(this)} />
-                <div className="row ms-5 me-5">
-                    {this.state.filteredProducts.map((item, idx) => {
 
-                        return (
-                            <div className="col-lg-2 col-md-3" key={idx}>
-                                <ProductsCard
-                                    onClick={this.onCardClicked.bind(this, item)}
-                                    product={item} />
-                            </div>
+    return (
+        <div>
+            <SearchFilter onChange={onSearchFilterChangeed} />
+            <div className="row ms-5 me-5">
+                {filteredProducts.map((item, idx) => {
 
-                        )
-                    })}
-                </div>
+                    return (
+                        <div className="col-lg-2 col-md-3" key={idx}>
+                            <ProductsCard
+                                onClick={() => onCardClicked(item)}
+                                product={item} />
+                        </div>
+
+                    )
+                })}
             </div>
-        )
-    }
-}
+        </div>
+    )
 
-Products.contextType = GlobalContext;
+}
 
 export default Products; 
