@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { navStruct } from './utils';
 
 
@@ -79,72 +81,93 @@ import { navStruct } from './utils';
 // }
 
 //After Refactoring
-class NavBar extends React.Component {
+function NavBar() {
 
-    constructor(props) {
-        super(props)
+    // constructor(props) {
+    //     super(props)
 
-        this.state = {
-            // activeTap: [true, false, false, false]
-            navStructState: navStruct
-        }
-    }
+    //     this.state = {
+    //         // activeTap: [true, false, false, false]
+    //         navStructState: navStruct
+    //     }
+    // }
 
-    onTabClicked(tabIdx) {
-        let _navStructState = JSON.parse(JSON.stringify(this.state.navStructState));
-        _navStructState = _navStructState.map((tab, idx) => {
-            // if (idx === tabIdx) {
-            //     tab.isActive = true;
-            // } else {
-            //     tab.isActive = false
-            // }
-            tab.isActive = (idx === tabIdx)
-            return tab;
+    const [navStructState, setNavStructState] = useState(navStruct);
+    const location = useLocation();
 
+    useEffect(() => {
+        const _navStruct = navStructState.map((item) => {
+            const _item = { ...item }
+            if (_item.path === location.pathname) {
+                _item.isActive = true;
+            } else {
+                _item.isActive = false;
+            }
 
-            // tab.isActive = (idx === tabIdx)
+            return _item;
         })
 
-        this.setState({
-            navStructState: _navStructState
-        })
+        setNavStructState(_navStruct);
 
-    }
+    }, [location])
 
-    render() {
-        const navStructState = this.state.navStructState;
-        return (
-            <div className="navbar navbar-expand-md bg-primary navbar-dark ps-5">
-                <button className='navbar-toggler' data-bs-toggle="collapse" data-bs-target="#mainNavBar">
-                    <span className='navbar-toggler-icon' />
-                </button>
 
-                <div className="collapse navbar-collapse" id="mainNavBar">
-                    <ul className="navbar-nav">
-                        {navStructState.map((tab, idx) => {
-                            return (
+    // function onTabClicked(tabIdx) {
+    //     let _navStructState = JSON.parse(JSON.stringify(navStructState));
+    //     _navStructState = _navStructState.map((tab, idx) => {
+    //         if (idx === tabIdx) {
+    //             tab.isActive = true;
+    //         } else {
+    //             tab.isActive = false
+    //         }
+    //         // tab.isActive = (idx === tabIdx)
+    //         return tab;
+
+
+    //         // tab.isActive = (idx === tabIdx)
+    //     })
+
+    //     // this.setState({
+    //     //     navStructState: _navStructState
+    //     // })
+    //     setNavStructState(_navStructState);
+
+    // }
+
+    // const navStructState = this.state.navStructState;
+    return (
+        <div className="navbar navbar-expand-md bg-primary navbar-dark ps-5">
+            <button className='navbar-toggler' data-bs-toggle="collapse" data-bs-target="#mainNavBar">
+                <span className='navbar-toggler-icon' />
+            </button>
+
+            <div className="collapse navbar-collapse" id="mainNavBar">
+                <ul className="navbar-nav">
+                    {navStructState.map((tab, idx) => {
+                        return (
+                            <Link to={tab.path} key={idx}>
                                 <li
                                     className='nav-item'
-                                    key={idx}
                                 >
                                     <button
                                         className={`btn nav-link ${tab.cssClass} ${tab.isActive ? "active" : ""}`}
-                                        onClick={this.onTabClicked.bind(this, idx)}
+                                    // onClick={() => onTabClicked(idx)}
                                     >
                                         {tab.name}
 
                                     </button>
                                 </li>
 
-                            )
-                        })}
-                    </ul>
+                            </Link>
 
-                </div>
+                        )
+                    })}
+                </ul>
 
             </div>
-        )
-    }
+
+        </div>
+    )
 }
 
 export default NavBar

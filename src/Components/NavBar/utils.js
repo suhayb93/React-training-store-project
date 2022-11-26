@@ -1,13 +1,18 @@
-export const navStruct = [{
-    name: 'Products',
-    isActive: true,
-},
-{
-    name: 'Category',
-    isActive: false,
-},
-{
-    name: 'Login',
-    isActive: false
-}
+export const navStruct = [
+    {
+        name: 'Category',
+        isActive: true,
+        path: '/'
+    },
+    {
+        name: 'Products',
+        isActive: false,
+        path: '/product'
+    },
+
+    {
+        name: 'Login',
+        isActive: false,
+        path: '/login'
+    }
 ]
