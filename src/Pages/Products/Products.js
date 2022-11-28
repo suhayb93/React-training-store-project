@@ -16,16 +16,21 @@ function Products() {
     const context = useContext(GlobalContext);
     const [queryString, setQueryString] = useSearchParams();
 
-    const _category = queryString.get('category');
-    const [category, setCategory] = useState(_category);
+    // const [category, setCategory] = useState(_category);
+    const location = useLocation();
 
-    console.log(category);
+    // useEffect(() => {
+    //     getProducts();
+    // }, [])
 
     useEffect(() => {
         getProducts();
-    }, [])
+    }, [location])
+
 
     async function getProducts() {
+        const category = queryString.get('category');
+
         let resp = ''
         if (!category) {
             resp = await FetchData('https://fakestoreapi.com/products', 'GET');

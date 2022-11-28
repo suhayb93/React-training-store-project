@@ -2,24 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { FetchData } from '../../Utils/ApiUtils';
 import './category.scss'
 import { mappCategory } from './utils';
-import { Link } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
 
 function Category() {
 
     const [categories, setCategories] = useState([]);
-    useEffect(() => {
-        getCategories();
-    }, [])
+    const _categories = useLoaderData()
 
-    const getCategories = async () => {
-        const resp = await FetchData('https://fakestoreapi.com/products/categories', 'GET');
-        const mappedCategories = mappCategory(resp.data);
-        if (resp.status === 200) {
-            setCategories(mappedCategories);
-        } else {
-            console.error("Categories can not be fetched please try again ...")
-        }
-    }
+    useEffect(() => {
+        setCategories(_categories)
+    }, [])
 
 
     return (
