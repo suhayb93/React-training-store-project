@@ -16,3 +16,11 @@ export function FetchData(url, method, body = {}, options = {}) {
         }
     })
 }
+
+export function FakeLoginApi() {
+    return new Promise((reslove, reject) => {
+        setTimeout(() => {
+            reslove({ user: { name: 'Suhayb' }, token: 'eyJhbGciOiJIUzI1NiIsInR', status: 200 })
+        }, 1500)
+    })
+}

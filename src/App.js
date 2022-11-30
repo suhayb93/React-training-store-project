@@ -15,21 +15,22 @@ import Layout from "./Components/Layout/Layout";
 import PageNotFound from "./Pages/PageNotFound/PageNotFound";
 import { mappCategory } from "./Pages/Category/utils";
 import { FetchData } from "./Utils/ApiUtils";
+import Login from "./Pages/Login/Login";
 
 class App extends React.Component {
 
 
   render() {
     // return (
-    <BrowserRouter>
+    // <BrowserRouter>
 
-      <Routes>
-        <Route element={<Layout />}>
-          <Route path={'/'} element={<Category />} />
-          <Route path={'/product'} element={<Products />} />
-        </Route>
-      </Routes>
-    </BrowserRouter >
+    //   <Routes>
+    //     <Route element={<Layout />}>
+    //       <Route path={'/'} element={<Category />} />
+    //       <Route path={'/product'} element={<Products />} />
+    //     </Route>
+    //   </Routes>
+    // </BrowserRouter >
     // );
 
     // const router = createBrowserRouter([
@@ -60,7 +61,7 @@ class App extends React.Component {
             }}
           />
           <Route path={'/product'} element={< Products />} />
-          {/* <Route path={'*'} element={<PageNotFound />} /> */}
+          <Route path={'/login'} element={<Login />} />
         </Route >
 
       )

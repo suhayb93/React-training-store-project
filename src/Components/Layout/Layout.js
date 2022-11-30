@@ -7,6 +7,7 @@ import { Modal } from 'bootstrap';
 import CustomModal from '../CustomModal/CustomModal'
 import NavBar from '../NavBar/NavBar';
 import { GlobalContext } from '../../Utils/Contexts';
+import { FakeLoginApi } from '../../Utils/ApiUtils';
 
 function Layout() {
 
@@ -17,6 +18,9 @@ function Layout() {
     });
 
     const modal = useRef();
+
+    const [user, setUser] = useState('');
+    const [token, setToken] = useState('');
 
     useEffect(() => {
         modal.current = new Modal('#customModal');
@@ -32,8 +36,25 @@ function Layout() {
 
     }
 
+    const auth = {
+        user,
+        token,
+        signin: async (username, password) => {
+            const resp = await FakeLoginApi(username, password);
+            if (resp.status === 200) {
+                setUser(resp.user);
+                setToken(resp.token)
+            }
+
+            return resp
+        },
+        signout: () => {
+
+        }
+    }
+
     return (
-        <GlobalContext.Provider value={{ showModal }}>
+        <GlobalContext.Provider value={{ showModal, auth }}>
             <div className="App">
                 <CustomModal
                     title={modalData?.title}
