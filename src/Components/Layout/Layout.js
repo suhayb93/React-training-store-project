@@ -49,7 +49,8 @@ function Layout() {
             return resp
         },
         signout: () => {
-
+            setUser("");
+            setToken("");
         }
     }
 

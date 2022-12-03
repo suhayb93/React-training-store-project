@@ -17,6 +17,7 @@ import { mappCategory } from "./Pages/Category/utils";
 import { FetchData } from "./Utils/ApiUtils";
 import Login from "./Pages/Login/Login";
 import RequireAuth from "./Components/RequireAuth/RequireAuth";
+import IsUnAuth from "./Components/RequireAuth/IsUnAuth";
 
 class App extends React.Component {
 
@@ -72,7 +73,12 @@ class App extends React.Component {
               < Products />
             </RequireAuth>
           } />
-          <Route path={'/login'} element={<Login />} />
+          <Route path={'/login'} element={
+            <IsUnAuth>
+              <Login />
+            </IsUnAuth>
+
+          } />
         </Route >
 
       )

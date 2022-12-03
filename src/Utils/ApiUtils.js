@@ -17,10 +17,14 @@ export function FetchData(url, method, body = {}, options = {}) {
     })
 }
 
-export function FakeLoginApi() {
-    return new Promise((reslove, reject) => {
+export function FakeLoginApi(username, password) {
+    return new Promise((resolve, reject) => {
         setTimeout(() => {
-            reslove({ user: { name: 'Suhayb' }, token: 'eyJhbGciOiJIUzI1NiIsInR', status: 200 })
+            if (username === 'Suhayb' && password === '123') {
+                resolve({ user: { name: 'Suhayb' }, token: 'eyJhbGciOiJIUzI1NiIsInR', status: 200 })
+            } else {
+                resolve({ user: '', token: '', status: 404 })
+            }
         }, 1500)
     })
 }

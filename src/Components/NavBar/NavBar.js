@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import LoginCard from '../LoginCard/LoginCard';
 import { navStruct } from './utils';
 
 
@@ -94,6 +95,10 @@ function NavBar() {
 
     const [navStructState, setNavStructState] = useState(navStruct);
     const location = useLocation();
+    const pathname = location.pathname;
+    const queryString = location.search
+    const fullPath = pathname + queryString;
+
 
     useEffect(() => {
         const _navStruct = navStructState.map((item) => {
@@ -136,29 +141,33 @@ function NavBar() {
 
     // const navStructState = this.state.navStructState;
     return (
-        <div className="navbar navbar-expand-md bg-primary navbar-dark ps-5">
+        <div className="navbar navbar-expand-md bg-primary navbar-dark px-5">
             <button className='navbar-toggler' data-bs-toggle="collapse" data-bs-target="#mainNavBar">
                 <span className='navbar-toggler-icon' />
             </button>
 
             <div className="collapse navbar-collapse" id="mainNavBar">
-                <ul className="navbar-nav">
+                <ul className="navbar-nav w-100 align-items-center">
                     {navStructState.map((tab, idx) => {
                         return (
-                            <Link to={tab.path} key={idx}>
-                                <li
-                                    className='nav-item'
-                                >
-                                    <button
-                                        className={`btn nav-link ${tab.cssClass} ${tab.isActive ? "active" : ""}`}
-                                    // onClick={() => onTabClicked(idx)}
+
+                            tab.name === 'Login' ?
+                                <LoginCard tab={tab} fullPath={fullPath} key={idx} />
+                                :
+                                <Link state={fullPath} to={tab.path} key={idx}>
+                                    <li
+                                        className='nav-item'
                                     >
-                                        {tab.name}
+                                        <button
+                                            className={`btn nav-link ${tab.cssClass} ${tab.isActive ? "active" : ""}`}
+                                        // onClick={() => onTabClicked(idx)}
+                                        >
+                                            {tab.name}
 
-                                    </button>
-                                </li>
+                                        </button>
+                                    </li>
 
-                            </Link>
+                                </Link>
 
                         )
                     })}
