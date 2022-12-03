@@ -16,6 +16,7 @@ import PageNotFound from "./Pages/PageNotFound/PageNotFound";
 import { mappCategory } from "./Pages/Category/utils";
 import { FetchData } from "./Utils/ApiUtils";
 import Login from "./Pages/Login/Login";
+import RequireAuth from "./Components/RequireAuth/RequireAuth";
 
 class App extends React.Component {
 
@@ -53,14 +54,24 @@ class App extends React.Component {
     const router = createBrowserRouter(
       createRoutesFromElements(
         <Route element={<Layout />} errorElement={<PageNotFound />}>
-          <Route path={'/'} element={< Category />}
+          <Route path={'/'} element={
+            <RequireAuth>
+              <Category />
+
+            </RequireAuth>
+
+          }
             loader={async () => {
               const resp = await FetchData('https://fakestoreapi.com/products/categories', 'GET');
               const mappedCategories = mappCategory(resp.data);
               return mappedCategories;
             }}
           />
-          <Route path={'/product'} element={< Products />} />
+          <Route path={'/product'} element={
+            <RequireAuth>
+              < Products />
+            </RequireAuth>
+          } />
           <Route path={'/login'} element={<Login />} />
         </Route >
 
