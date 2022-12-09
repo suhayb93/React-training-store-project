@@ -8,7 +8,7 @@ function IsUnAuth(props) {
 
     return (
         auth.user ?
-            <Navigate to={location.state} />
+            <Navigate to={location.state.fullPath} />
             :
             props.children
     )

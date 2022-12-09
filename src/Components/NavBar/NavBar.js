@@ -154,7 +154,7 @@ function NavBar() {
                             tab.name === 'Login' ?
                                 <LoginCard tab={tab} fullPath={fullPath} key={idx} />
                                 :
-                                <Link state={fullPath} to={tab.path} key={idx}>
+                                <Link state={{ fullPath, data: tab.data }} to={tab.path} key={idx}>
                                     <li
                                         className='nav-item'
                                     >

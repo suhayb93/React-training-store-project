@@ -19,8 +19,11 @@ function Layout() {
 
     const modal = useRef();
 
-    const [user, setUser] = useState('');
-    const [token, setToken] = useState('');
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    const storedToken = localStorage.getItem('token');
+
+    const [user, setUser] = useState(storedUser);
+    const [token, setToken] = useState(storedToken);
 
     useEffect(() => {
         modal.current = new Modal('#customModal');
@@ -44,6 +47,8 @@ function Layout() {
             if (resp.status === 200) {
                 setUser(resp.user);
                 setToken(resp.token)
+                localStorage.setItem('user', JSON.stringify(resp.user));
+                localStorage.setItem('token', resp.token);
             }
 
             return resp
@@ -51,6 +56,7 @@ function Layout() {
         signout: () => {
             setUser("");
             setToken("");
+            localStorage.clear();
         }
     }
 

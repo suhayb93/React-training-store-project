@@ -9,7 +9,12 @@ export const navStruct = [
         isActive: false,
         path: '/product'
     },
-
+    {
+        name: 'Info',
+        isActive: false,
+        path: '/info?data=something',
+        data: 'some random data'
+    },
     {
         name: 'Login',
         isActive: false,

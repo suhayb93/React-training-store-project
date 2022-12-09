@@ -18,6 +18,7 @@ import { FetchData } from "./Utils/ApiUtils";
 import Login from "./Pages/Login/Login";
 import RequireAuth from "./Components/RequireAuth/RequireAuth";
 import IsUnAuth from "./Components/RequireAuth/IsUnAuth";
+import Info from "./Pages/Info/Info";
 
 class App extends React.Component {
 
@@ -79,6 +80,8 @@ class App extends React.Component {
             </IsUnAuth>
 
           } />
+          <Route path={"/info"} element={<Info />} />
+          <Route path={"/info/:id"} element={<Info />} />
         </Route >
 
       )
