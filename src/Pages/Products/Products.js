@@ -31,7 +31,7 @@ function Products() {
     async function getProducts() {
         const category = queryString.get('category');
 
-        let resp = ''
+        let res = ''
         if (!category) {
             resp = await FetchData('https://fakestoreapi.com/products', 'GET');
 

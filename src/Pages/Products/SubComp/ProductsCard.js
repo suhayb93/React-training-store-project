@@ -10,7 +10,7 @@ function ProductsCard({ product, onClick }) {
     }
     return (
         <div
-            onClick={onProductCardClicked}
+            onClick={onProductCardClicke}
             className='product-card'
         >
             <div className='product-img-wrapper'>

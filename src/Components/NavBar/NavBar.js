@@ -151,7 +151,7 @@ function NavBar() {
                     {navStructState.map((tab, idx) => {
                         return (
 
-                            tab.name === 'Login' ?
+                            ta.name === 'Login' ?
                                 <LoginCard tab={tab} fullPath={fullPath} key={idx} />
                                 :
                                 <Link state={{ fullPath, data: tab.data }} to={tab.path} key={idx}>
