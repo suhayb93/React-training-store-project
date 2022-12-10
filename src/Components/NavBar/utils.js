@@ -5,7 +5,6 @@ export const navStruct = [
         path: '/'
     },
     {
-        name: 'Products',
         isActive: false,
         path: '/product'
     },

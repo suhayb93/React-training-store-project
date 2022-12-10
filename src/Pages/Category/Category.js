@@ -6,7 +6,7 @@ import { Link, useLoaderData } from 'react-router-dom';
 
 function Category() {
 
-    const [categories, setCategories] = useState([]);
+    const [categories, setCategories] = useState();
     const _categories = useLoaderData()
 
     useEffect(() => {
